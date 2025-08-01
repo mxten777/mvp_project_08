@@ -1,0 +1,14 @@
+<!-- PWA 아이콘 생성을 위한 SVG 파일 -->
+<svg width="192" height="192" viewBox="0 0 192 192" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 배경 -->
+  <rect width="192" height="192" rx="24" fill="#2563eb"/>
+  
+  <!-- 집 아이콘 -->
+  <path d="M96 40L152 80V152H120V112H72V152H40V80L96 40Z" fill="white" stroke="white" stroke-width="2"/>
+  
+  <!-- 하트 아이콘 (복지를 상징) -->
+  <path d="M96 140C96 140 72 125 72 105C72 95 80 87 90 87C92 87 94 88 96 90C98 88 100 87 102 87C112 87 120 95 120 105C120 125 96 140 96 140Z" fill="#f59e0b"/>
+  
+  <!-- 텍스트 -->
+  <text x="96" y="170" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="14" font-weight="bold">복지알림</text>
+</svg>
