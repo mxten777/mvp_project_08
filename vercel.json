@@ -11,6 +11,28 @@
   ],
   "routes": [
     {
+      "src": "/manifest.webmanifest",
+      "dest": "/manifest.webmanifest",
+      "headers": {
+        "Content-Type": "application/manifest+json"
+      }
+    },
+    {
+      "src": "/sw.js",
+      "dest": "/sw.js",
+      "headers": {
+        "Content-Type": "application/javascript",
+        "Service-Worker-Allowed": "/"
+      }
+    },
+    {
+      "src": "/registerSW.js",
+      "dest": "/registerSW.js",
+      "headers": {
+        "Content-Type": "application/javascript"
+      }
+    },
+    {
       "handle": "filesystem"
     },
     {
