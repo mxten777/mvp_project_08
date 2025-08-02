@@ -50,23 +50,29 @@ const Header: React.FC<HeaderProps> = ({ onMenuToggle, isMenuOpen = false }) => 
           </div>
           
           <div className="header-actions">
-            <button
-              className={`btn-icon ${isTTSEnabled ? 'active' : ''}`}
-              onClick={handleTTSToggle}
-              aria-label={isTTSEnabled ? '음성 안내 끄기' : '음성 안내 켜기'}
-              title={isTTSEnabled ? '음성 안내 끄기' : '음성 안내 켜기'}
-            >
-              {isTTSEnabled ? <Volume2 size={24} /> : <VolumeX size={24} />}
-            </button>
+            <div className="action-button">
+              <button
+                className={`btn-icon ${isTTSEnabled ? 'active' : ''}`}
+                onClick={handleTTSToggle}
+                aria-label={isTTSEnabled ? '음성 안내 끄기' : '음성 안내 켜기'}
+                title={isTTSEnabled ? '음성 안내 끄기' : '음성 안내 켜기'}
+              >
+                {isTTSEnabled ? <Volume2 size={24} /> : <VolumeX size={24} />}
+              </button>
+              <span className="action-label">음성안내</span>
+            </div>
             
-            <button
-              className="btn-icon"
-              aria-label="설정"
-              title="설정"
-              onClick={() => speakText('설정 메뉴')}
-            >
-              <Settings size={24} />
-            </button>
+            <div className="action-button">
+              <button
+                className="btn-icon"
+                aria-label="설정"
+                title="설정"
+                onClick={() => speakText('설정 메뉴')}
+              >
+                <Settings size={24} />
+              </button>
+              <span className="action-label">설정</span>
+            </div>
           </div>
         </div>
       </div>
