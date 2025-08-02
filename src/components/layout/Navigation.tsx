@@ -3,7 +3,11 @@ import { NavLink } from 'react-router-dom';
 import { Home, Heart, Calendar, UtensilsCrossed, User } from 'lucide-react';
 import './Navigation.css';
 
-const Navigation: React.FC = () => {
+interface NavigationProps {
+  onNavigate?: () => void;
+}
+
+const Navigation: React.FC<NavigationProps> = ({ onNavigate }) => {
   const navItems = [
     {
       path: '/',
@@ -58,7 +62,10 @@ const Navigation: React.FC = () => {
               className={({ isActive }) =>
                 `nav-item ${isActive ? 'nav-item--active' : ''}`
               }
-              onClick={() => speakText(`${item.label} 페이지로 이동`)}
+              onClick={() => {
+                speakText(`${item.label} 페이지로 이동`);
+                onNavigate?.(); // 모바일 메뉴 닫기
+              }}
               aria-label={`${item.label} - ${item.description}`}
             >
               <div className="nav-icon">

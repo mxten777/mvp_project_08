@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
-import { Volume2, VolumeX, Settings } from 'lucide-react';
+import { Volume2, VolumeX, Settings, Menu, X } from 'lucide-react';
 import './Header.css';
 
-const Header: React.FC = () => {
+interface HeaderProps {
+  onMenuToggle?: () => void;
+  isMenuOpen?: boolean;
+}
+
+const Header: React.FC<HeaderProps> = ({ onMenuToggle, isMenuOpen = false }) => {
   const [isTTSEnabled, setIsTTSEnabled] = useState(false);
   
   const handleTTSToggle = () => {
@@ -23,6 +28,16 @@ const Header: React.FC = () => {
     <header className="header">
       <div className="container">
         <div className="header-content">
+          {/* 햄버거 메뉴 버튼 (모바일용) */}
+          <button
+            className="hamburger-btn"
+            onClick={onMenuToggle}
+            aria-label={isMenuOpen ? '메뉴 닫기' : '메뉴 열기'}
+            title={isMenuOpen ? '메뉴 닫기' : '메뉴 열기'}
+          >
+            {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
+          </button>
+
           <div className="logo-section">
             <h1 
               className="app-title"

@@ -24,9 +24,24 @@
 }
 
 .welcome-card {
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
-  color: var(--text-light);
+  background: var(--bg-header);
+  color: var(--text-on-primary);
   border: none;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.15);
+  overflow: hidden;
+  position: relative;
+}
+
+.welcome-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+  pointer-events: none;
 }
 
 .welcome-content {
@@ -167,23 +182,46 @@
   align-items: flex-start;
   gap: var(--spacing-md);
   padding: var(--spacing-lg);
-  background-color: var(--bg-primary);
+  background-color: var(--bg-card);
   border: 1px solid var(--bg-tertiary);
   border-radius: var(--radius-lg);
   cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.notification-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--primary-color);
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .notification-card:hover {
-  border-color: var(--primary-color);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-md);
+  border-color: var(--primary-light);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.15);
+}
+
+.notification-card:hover::before {
+  opacity: 1;
 }
 
 .notification-card.priority-high {
   border-left: 4px solid var(--danger-color);
-  background-color: rgba(220, 38, 38, 0.05);
+  background: linear-gradient(135deg, rgba(220, 38, 38, 0.05) 0%, rgba(220, 38, 38, 0.02) 100%);
+}
+
+.notification-card.priority-high::before {
+  background: var(--danger-color);
+  opacity: 1;
 }
 
 .notification-content {

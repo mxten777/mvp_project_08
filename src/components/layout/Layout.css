@@ -6,6 +6,40 @@
   background-color: var(--bg-secondary);
 }
 
+/* 모바일 메뉴 오버레이 */
+.menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 200;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding-top: 80px; /* 헤더 높이만큼 */
+}
+
+.mobile-menu {
+  background: var(--bg-primary);
+  width: 280px;
+  height: calc(100vh - 80px);
+  box-shadow: var(--shadow-lg);
+  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+  animation: slideInLeft 0.3s ease-out;
+  overflow-y: auto;
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
 .main-content {
   flex: 1;
   padding: var(--spacing-lg) 0;

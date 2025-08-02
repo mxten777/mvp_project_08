@@ -1,23 +1,27 @@
 /* 시니어 친화적 전역 스타일 */
 :root {
   /* 색상 팔레트 - 고대비 및 시각적 접근성 고려 */
-  --primary-color: #2563eb;
-  --primary-dark: #1d4ed8;
+  --primary-color: #3b82f6;
+  --primary-dark: #2563eb;
+  --primary-light: #60a5fa;
   --secondary-color: #10b981;
   --accent-color: #f59e0b;
   --danger-color: #dc2626;
   --success-color: #059669;
   
-  /* 배경색 */
+  /* 배경색 - 더 부드러운 톤 */
   --bg-primary: #ffffff;
-  --bg-secondary: #f8fafc;
+  --bg-secondary: #f1f5f9;
   --bg-tertiary: #e2e8f0;
+  --bg-card: #ffffff;
+  --bg-header: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
   
-  /* 텍스트 색상 */
-  --text-primary: #1e293b;
-  --text-secondary: #475569;
+  /* 텍스트 색상 - 가독성 개선 */
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
   --text-muted: #64748b;
   --text-light: #ffffff;
+  --text-on-primary: #ffffff;
   
   /* 그림자 */
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
