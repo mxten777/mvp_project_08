@@ -52,7 +52,7 @@ const Navigation: React.FC<NavigationProps> = ({ onNavigate }) => {
 
   return (
     <nav className="navigation" role="navigation" aria-label="주요 메뉴">
-      <div className="nav-container">
+      <div className="nav-container" role="menubar">
         {navItems.map((item) => {
           const IconComponent = item.icon;
           return (
@@ -64,14 +64,22 @@ const Navigation: React.FC<NavigationProps> = ({ onNavigate }) => {
               }
               onClick={() => {
                 speakText(`${item.label} 페이지로 이동`);
-                onNavigate?.(); // 모바일 메뉴 닫기
+                onNavigate?.();
               }}
               aria-label={`${item.label} - ${item.description}`}
+              role="menuitem"
+              tabIndex={0}
             >
-              <div className="nav-icon">
-                <IconComponent size={24} />
-              </div>
-              <span className="nav-label">{item.label}</span>
+              {({ isActive }) => (
+                <>
+                  <div className="nav-icon" aria-hidden="true">
+                    <IconComponent size={24} />
+                  </div>
+                  <span className="nav-label">{item.label}</span>
+                  {/* aria-current는 최상위에만 적용 */}
+                  {isActive && <span style={{display:'none'}} aria-current="page"></span>}
+                </>
+              )}
             </NavLink>
           );
         })}

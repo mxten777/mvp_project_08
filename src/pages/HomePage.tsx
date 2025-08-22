@@ -3,6 +3,15 @@ import { MapPin, Bell, Clock, Utensils } from 'lucide-react';
 import './HomePage.css';
 
 const HomePage: React.FC = () => {
+  useEffect(() => {
+    // 페이지 진입 시 TTS 안내
+    if ('speechSynthesis' in window) {
+      const utter = new SpeechSynthesisUtterance('홈 화면입니다. 오늘도 건강하고 행복한 하루 되세요.');
+      utter.lang = 'ko-KR';
+      utter.rate = 0.8;
+      speechSynthesis.speak(utter);
+    }
+  }, []);
   const [currentTime, setCurrentTime] = useState(new Date());
   const [location, setLocation] = useState<string>('위치를 확인하는 중...');
 

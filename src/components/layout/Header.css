@@ -1,3 +1,15 @@
+.header-a11y-controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+    margin-left: 12px;
+    margin-right: 8px;
+  height: 40px;
+    background: rgba(243,244,246,0.95);
+    border-radius: 10px;
+    padding: 4px 12px;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+
 /* Header 컴포넌트 스타일 */
 .header {
   background: var(--bg-header);
@@ -12,10 +24,11 @@
 
 .header-content {
   display: flex;
-  justify-content: space-between;
+  flex-direction: row;
   align-items: center;
-  gap: var(--spacing-md);
+  gap: 10px;
   position: relative;
+  justify-content: flex-start;
 }
 
 /* 햄버거 메뉴 버튼 */
@@ -50,7 +63,12 @@
 }
 
 .logo-section {
-  flex: 1;
+  flex: 1 1 0%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
 }
 
 .app-title {
@@ -149,25 +167,19 @@
   background: rgba(34, 197, 94, 0.2);
   border-color: rgba(34, 197, 94, 0.5);
   color: #22c55e;
+
 }
 
-.btn-icon.active:hover {
-  background: rgba(34, 197, 94, 0.3);
-  border-color: rgba(34, 197, 94, 0.7);
+/* === btn-icon.active 중복 정의 제거 및 가독성/접근성 개선 === */
+.btn-icon.active {
+  background: #2563eb;
+  color: #fff;
+  border-color: #2563eb;
 }
-
 .btn-icon:focus {
-  outline: 3px solid rgba(255, 255, 255, 0.5);
+  outline: 2.5px solid #2563eb;
   outline-offset: 2px;
 }
-
-.btn-icon.active {
-  background-color: rgba(255, 255, 255, 0.3);
-  color: var(--accent-color);
-}
-
-/* 모바일 반응형 */
-@media (max-width: 768px) {
   .header {
     padding: var(--spacing-md) 0;
   }

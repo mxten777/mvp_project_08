@@ -4,6 +4,15 @@ import type { Menu, MealType, Location } from '../types';
 import './MenuPage.css';
 
 const MenuPage: React.FC = () => {
+  useEffect(() => {
+    // 페이지 진입 시 TTS 안내
+    if ('speechSynthesis' in window) {
+      const utter = new SpeechSynthesisUtterance('식단표 페이지입니다. 오늘의 식단을 확인해보세요.');
+      utter.lang = 'ko-KR';
+      utter.rate = 0.8;
+      speechSynthesis.speak(utter);
+    }
+  }, []);
   const [menus, setMenus] = useState<Menu[]>([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedLocation, setSelectedLocation] = useState<string>('all');
@@ -335,12 +344,12 @@ const MenuPage: React.FC = () => {
                   </div>
 
                   <div className="meal-cards">
-                    {menusForMealType.map((menu) => (
+                    {menusForMealType.map((menu: Menu) => (
                       <article 
                         key={menu.id} 
                         className="menu-card"
                         onClick={() => {
-                          const menuItems = menu.items.map(item => item.name).join(', ');
+                          const menuItems = menu.items.map((item: { name: string }) => item.name).join(', ');
                           speakText(`${getLocationName(menu.locationId)} ${mealTypeInfo.name} 식단: ${menuItems}`);
                         }}
                       >
@@ -358,7 +367,7 @@ const MenuPage: React.FC = () => {
 
                         <div className="menu-card-content">
                           <div className="menu-items">
-                            {menu.items.map((item, index) => (
+                            {menu.items.map((item: { name: string; description?: string; allergens?: string[] }, index: number) => (
                               <div key={index} className="menu-item">
                                 <div className="item-info">
                                   <span className="item-name">{item.name}</span>
@@ -411,7 +420,7 @@ const MenuPage: React.FC = () => {
                             <div className="special-notes">
                               <h4 className="notes-title">특별 안내</h4>
                               <ul className="notes-list">
-                                {menu.specialNotes.map((note, index) => (
+                                {menu.specialNotes.map((note: string, index: number) => (
                                   <li key={index}>{note}</li>
                                 ))}
                               </ul>

@@ -1,9 +1,20 @@
+
 import React, { useState, useEffect } from 'react';
 import { Search, MapPin, Phone, Clock, Heart, Home, Utensils, GraduationCap, Car, Coins } from 'lucide-react';
 import type { WelfareInfo, WelfareCategory } from '../types';
 import './WelfarePage.css';
 
 const WelfarePage: React.FC = () => {
+  useEffect(() => {
+    // 페이지 진입 시 TTS 안내
+    if ('speechSynthesis' in window) {
+      const utter = new SpeechSynthesisUtterance('복지 정보 페이지입니다. 다양한 복지 혜택을 확인해보세요.');
+      utter.lang = 'ko-KR';
+      utter.rate = 0.8;
+      speechSynthesis.speak(utter);
+    }
+  }, []);
+
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<WelfareCategory | 'all'>('all');
   const [welfareList, setWelfareList] = useState<WelfareInfo[]>([]);
@@ -22,51 +33,27 @@ const WelfarePage: React.FC = () => {
 
   // 더미 데이터 (실제로는 Firebase에서 가져올 예정)
   useEffect(() => {
+
     const loadWelfareData = async () => {
       setLoading(true);
       // 실제 API 호출 시뮬레이션
       await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      // 더미 데이터 배열
       const dummyData: WelfareInfo[] = [
         {
-          id: '1',
-          title: '노인 무료 건강검진',
-          description: '65세 이상 어르신을 위한 종합건강검진 서비스입니다. 혈압, 혈당, 콜레스테롤 등 기본 검사를 무료로 받으실 수 있습니다.',
-          category: 'health',
-          eligibility: ['65세 이상', '거주지 관할 보건소 등록'],
-          location: {
-            id: 'loc1',
-            name: '종로구 보건소',
-            address: '서울시 종로구 송월길 14',
-            coordinates: { lat: 37.5735, lng: 126.9788 },
-            city: '서울시',
-            district: '종로구',
-            neighborhood: '청운동'
-          },
-          contactInfo: {
-            phone: '02-2148-3500',
-            email: 'health@jongno.go.kr',
-            hours: '평일 09:00-18:00'
-          },
-          deadline: new Date('2024-12-31'),
-          tags: ['건강검진', '무료', '예약필수'],
-          createdAt: new Date('2024-01-01'),
-          updatedAt: new Date('2024-01-01')
-        },
-        {
           id: '2',
-          title: '경로당 무료 급식',
-          description: '지역 경로당에서 제공하는 무료 점심 급식 서비스입니다. 영양사가 설계한 균형잡힌 식단을 제공합니다.',
+          title: '경로식당 무료급식',
+          description: '어르신을 위한 무료 급식 서비스. 영양식 제공.',
           category: 'food',
-          eligibility: ['60세 이상', '지역 주민'],
+          eligibility: ['65세 이상', '기초생활수급자'],
           location: {
             id: 'loc2',
-            name: '청운동 경로당',
-            address: '서울시 종로구 청운효자동 123',
-            coordinates: { lat: 37.5756, lng: 126.9705 },
+            name: '종로노인종합복지관',
+            address: '서울시 종로구 대학로 8길 1',
+            coordinates: { lat: 37.5796, lng: 126.9982 },
             city: '서울시',
             district: '종로구',
-            neighborhood: '청운동'
+            neighborhood: '명륜동'
           },
           contactInfo: {
             phone: '02-735-1234',
@@ -124,11 +111,9 @@ const WelfarePage: React.FC = () => {
           updatedAt: new Date('2024-01-01')
         }
       ];
-      
       setWelfareList(dummyData);
       setLoading(false);
     };
-
     loadWelfareData();
   }, []);
 
@@ -278,7 +263,7 @@ const WelfarePage: React.FC = () => {
                       <div className="detail-item">
                         <strong>신청 자격:</strong>
                         <ul className="eligibility-list">
-                          {welfare.eligibility.map((item, index) => (
+                            {welfare.eligibility.map((item: string, index: number) => (
                             <li key={index}>{item}</li>
                           ))}
                         </ul>
@@ -302,7 +287,7 @@ const WelfarePage: React.FC = () => {
                     </div>
 
                     <div className="welfare-tags">
-                      {welfare.tags.map((tag, index) => (
+                          {welfare.tags.map((tag: string, index: number) => (
                         <span key={index} className="welfare-tag">
                           #{tag}
                         </span>

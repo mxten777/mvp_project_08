@@ -4,6 +4,15 @@ import type { Schedule, ScheduleCategory } from '../types';
 import './SchedulePage.css';
 
 const SchedulePage: React.FC = () => {
+  useEffect(() => {
+    // 페이지 진입 시 TTS 안내
+    if ('speechSynthesis' in window) {
+      const utter = new SpeechSynthesisUtterance('일정표 페이지입니다. 복지관의 다양한 프로그램 일정을 확인하세요.');
+      utter.lang = 'ko-KR';
+      utter.rate = 0.8;
+      speechSynthesis.speak(utter);
+    }
+  }, []);
   const [schedules, setSchedules] = useState<Schedule[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<ScheduleCategory | 'all'>('all');
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -389,7 +398,7 @@ const SchedulePage: React.FC = () => {
                     </div>
 
                     <div className="schedule-tags">
-                      {schedule.tags.map((tag, index) => (
+                      {schedule.tags.map((tag: string, index: number) => (
                         <span key={index} className="schedule-tag">
                           #{tag}
                         </span>
