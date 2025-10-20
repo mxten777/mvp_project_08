@@ -125,87 +125,159 @@ const HomePage: React.FC = () => {
   ];
 
   return (
-    <div className="space-y-6 md:space-y-8 w-full px-2 md:px-6">
+    <div className="space-y-8 w-full px-4 md:px-6">
       {/* 인사말/시간/위치 프리미엄 카드 */}
       <section>
-        <Card variant="primary" className="p-4 md:p-8 flex flex-col gap-3 md:gap-4 items-center text-center animate-fade-in">
-          <h2 className="text-2xl md:text-4xl font-extrabold mb-2 tracking-tight">
+        <Card variant="primary" className="p-8 flex flex-col gap-4 items-center text-center animate-fade-in">
+          <h2 className="text-3xl md:text-4xl font-extrabold mb-2 tracking-tight">
             안녕하세요! <span aria-label="손인사">👋</span>
           </h2>
-          <p className="text-lg md:text-2xl mb-4 opacity-90 font-medium">
+          <p className="text-xl md:text-2xl mb-4 opacity-90 font-medium">
             오늘도 건강하고 행복한 하루 되세요
           </p>
-          <div className="flex flex-col gap-3 md:gap-4 w-full justify-center items-center">
+          <div className="flex flex-col md:flex-row gap-4 w-full justify-center items-center">
             <Button
               variant="outline"
               size="lg"
-              className="flex items-center gap-2 md:gap-3 w-full max-w-xs justify-center text-lg md:text-xl bg-white/30 hover:bg-white/50"
+              className="flex items-center gap-3 w-full md:w-auto justify-center text-xl bg-white/30 hover:bg-white/50"
               onClick={() => speakText(`현재 시간은 ${formatTime(currentTime)}입니다`)}
               aria-label="현재 시간 듣기"
             >
-              <Clock size={24} />
-              <span className="font-mono text-xl md:text-2xl">{formatTime(currentTime)}</span>
+              <Clock size={28} />
+              <span className="font-mono text-2xl">{formatTime(currentTime)}</span>
             </Button>
-            <div className="text-base md:text-xl opacity-80 flex items-center gap-2 text-center">
+            <div className="text-lg md:text-xl opacity-80 flex items-center gap-2">
               <span className="sr-only">날짜</span>
               {formatDate(currentTime)}
             </div>
             <Button
               variant="outline"
               size="lg"
-              className="flex items-center gap-2 md:gap-3 w-full max-w-xs justify-center text-base md:text-xl bg-white/30 hover:bg-white/50"
+              className="flex items-center gap-3 w-full md:w-auto justify-center text-xl bg-white/30 hover:bg-white/50"
               onClick={() => speakText(`현재 위치는 ${location}입니다`)}
               aria-label="현재 위치 듣기"
             >
-              <MapPin size={20} />
-              <span className="text-sm md:text-base">{location}</span>
+              <MapPin size={24} />
+              <span>{location}</span>
             </Button>
           </div>
         </Card>
       </section>
 
       {/* 빠른 메뉴 프리미엄 섹션 */}
-      <section className="bg-gradient-to-br from-blue-50 to-blue-100 p-4 md:p-6 rounded-2xl shadow-lg">
-        <div className="text-center mb-4 md:mb-6 p-3 md:p-4 bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl text-white">
-          <h3 className="text-lg md:text-2xl font-bold m-0">
+      <section style={{
+        background: 'linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%)',
+        padding: '24px',
+        margin: '24px 0',
+        borderRadius: '20px',
+        boxShadow: '0 10px 25px rgba(59, 130, 246, 0.1)',
+        minHeight: '400px',
+        width: '100%'
+      }}>
+        <div style={{
+          textAlign: 'center',
+          marginBottom: '24px',
+          padding: '16px',
+          background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
+          borderRadius: '16px',
+          color: 'white'
+        }}>
+          <h3 style={{ fontSize: '24px', fontWeight: 'bold', margin: '0' }}>
             🎯 자주 찾는 주요 메뉴를 한눈에!
           </h3>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+          gap: '24px'
+        }}>
           {quickActions.map((action, index) => {
             const colors = [
-              { bg: 'bg-white', border: 'border-blue-500', button: 'bg-blue-500', hover: 'hover:bg-blue-600', icon: '🔔' },
-              { bg: 'bg-white', border: 'border-green-500', button: 'bg-green-500', hover: 'hover:bg-green-600', icon: '⏰' },
-              { bg: 'bg-white', border: 'border-yellow-500', button: 'bg-yellow-500', hover: 'hover:bg-yellow-600', icon: '🍽️' }
+              { bg: '#ffffff', border: '#3b82f6', button: '#3b82f6', icon: '🔔' },
+              { bg: '#ffffff', border: '#10b981', button: '#10b981', icon: '⏰' },
+              { bg: '#ffffff', border: '#f59e0b', button: '#f59e0b', icon: '🍽️' }
             ];
             const color = colors[index] || colors[0];
 
             return (
               <div
                 key={index}
-                className={`${color.bg} ${color.border} border-2 rounded-2xl p-4 md:p-6 text-center min-h-48 md:min-h-56 flex flex-col justify-between shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 cursor-pointer`}
-                onClick={action.action}
-                onMouseEnter={() => speakText(action.title)}
+                style={{
+                  backgroundColor: color.bg,
+                  border: `2px solid ${color.border}`,
+                  borderRadius: '20px',
+                  padding: '24px',
+                  textAlign: 'center',
+                  minHeight: '220px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                  boxShadow: '0 8px 20px rgba(0, 0, 0, 0.08)',
+                  transition: 'all 0.3s ease',
+                  cursor: 'pointer'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-4px)';
+                  e.currentTarget.style.boxShadow = '0 12px 30px rgba(0, 0, 0, 0.15)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 8px 20px rgba(0, 0, 0, 0.08)';
+                }}
               >
                 <div>
-                  <div className={`text-3xl md:text-4xl mb-3 md:mb-4 ${color.button} w-16 md:w-20 h-16 md:h-20 rounded-full flex items-center justify-center mx-auto shadow-md`}>
-                    <span className="text-white text-xl md:text-2xl">{color.icon}</span>
+                  <div style={{
+                    fontSize: '48px',
+                    marginBottom: '16px',
+                    background: `linear-gradient(135deg, ${color.border}, ${color.button})`,
+                    width: '80px',
+                    height: '80px',
+                    borderRadius: '50%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    margin: '0 auto 16px',
+                    boxShadow: `0 4px 12px ${color.border}33`
+                  }}>
+                    {color.icon}
                   </div>
-                  <h4 className="text-lg md:text-xl font-bold mb-2 md:mb-3 text-gray-800 leading-tight">
+                  <h4 style={{
+                    fontSize: '20px',
+                    fontWeight: 'bold',
+                    marginBottom: '12px',
+                    color: '#1f2937',
+                    lineHeight: '1.3'
+                  }}>
                     {action.title}
                   </h4>
-                  <p className="text-sm md:text-base text-gray-600 mb-3 md:mb-5 leading-relaxed">
+                  <p style={{
+                    fontSize: '16px',
+                    color: '#6b7280',
+                    marginBottom: '20px',
+                    lineHeight: '1.5'
+                  }}>
                     {action.description}
                   </p>
                 </div>
-                <Button
-                  variant="primary"
-                  size="md"
-                  className={`w-full ${color.button} ${color.hover} text-white font-semibold shadow-md text-sm md:text-base`}
+                <button
+                  style={{
+                    background: `linear-gradient(135deg, ${color.button}, ${color.border})`,
+                    color: 'white',
+                    padding: '12px 24px',
+                    borderRadius: '12px',
+                    border: 'none',
+                    fontSize: '16px',
+                    fontWeight: '600',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                    boxShadow: `0 4px 12px ${color.button}33`
+                  }}
+                  onClick={action.action}
+                  onMouseEnter={() => speakText(action.title)}
                 >
                   바로가기
-                </Button>
+                </button>
               </div>
             );
           })}
@@ -214,18 +286,18 @@ const HomePage: React.FC = () => {
 
       {/* 최근 알림 프리미엄 카드 섹션 */}
       <section>
-        <div className="flex flex-col md:flex-row gap-3 md:gap-0 md:justify-between md:items-center mb-4 md:mb-6">
-          <h3 className="text-xl md:text-2xl font-bold text-gray-800">최근 알림</h3>
+        <div className="flex justify-between items-center mb-6">
+          <h3 className="text-2xl font-bold text-gray-800">최근 알림</h3>
           <Button
             variant="outline"
             size="md"
-            className="bg-gray-100 hover:bg-gray-200 text-gray-800 px-3 md:px-4 py-2 rounded-lg font-medium text-sm md:text-base w-full md:w-auto"
+            className="bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-2 rounded-lg font-medium"
             onClick={() => speakText('모든 알림을 확인합니다')}
           >
             전체 보기
           </Button>
         </div>
-        <div className="space-y-3 md:space-y-5">
+        <div className="space-y-5">
           {recentNotifications.map((notification) => (
             <NotificationCard
               key={notification.id}
@@ -243,15 +315,15 @@ const HomePage: React.FC = () => {
 
       {/* 긴급 연락처 프리미엄 배너/버튼 섹션 */}
       <section>
-        <Banner color="danger" className="mb-3 md:mb-4 text-lg md:text-xl font-semibold flex items-center gap-2 md:gap-3">
-          <span className="text-xl md:text-2xl">🚨</span>
+        <Banner color="danger" className="mb-4 text-xl font-semibold flex items-center gap-3">
+          <span className="text-2xl">🚨</span>
           <span>긴급 상황 시 아래 번호로 바로 연락하세요!</span>
         </Banner>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <Button
             variant="danger"
             size="lg"
-            className="w-full flex items-center justify-center text-lg md:text-xl gap-2 md:gap-3 shadow-lg py-4 md:py-6"
+            className="w-full flex items-center justify-center text-xl gap-3 shadow-lg"
             onClick={() => {
               speakText('119 화재 신고');
               window.location.href = 'tel:119';
@@ -263,7 +335,7 @@ const HomePage: React.FC = () => {
           <Button
             variant="primary"
             size="lg"
-            className="w-full flex items-center justify-center text-lg md:text-xl gap-2 md:gap-3 shadow-lg py-4 md:py-6"
+            className="w-full flex items-center justify-center text-xl gap-3 shadow-lg"
             onClick={() => {
               speakText('112 경찰 신고');
               window.location.href = 'tel:112';
@@ -275,7 +347,7 @@ const HomePage: React.FC = () => {
           <Button
             variant="secondary"
             size="lg"
-            className="w-full flex items-center justify-center text-lg md:text-xl gap-2 md:gap-3 shadow-lg py-4 md:py-6"
+            className="w-full flex items-center justify-center text-xl gap-3 shadow-lg"
             onClick={() => {
               speakText('복지센터 연락');
               window.location.href = 'tel:02-123-4567';

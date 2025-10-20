@@ -1,9 +1,7 @@
 
-// (중복 import 제거)
-import { requestFcmPermissionAndGetToken, onFcmMessage } from './services/firebase';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
 import { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { requestFcmPermissionAndGetToken, onFcmMessage } from './services/firebase';
 import Layout from './components/layout/Layout.tsx';
 import HomePage from './pages/HomePage.tsx';
 import WelfarePage from './pages/WelfarePage.tsx';
@@ -13,6 +11,8 @@ import ProfilePage from './pages/ProfilePage.tsx';
 import './styles/global.css';
 
 function App() {
+  console.log('App 컴포넌트 렌더링 시작');
+  
   const [fontSize, setFontSize] = useState<number>(() => {
     const saved = localStorage.getItem('fontSize');
     return saved ? Number(saved) : 18;
@@ -47,7 +47,8 @@ function App() {
     });
     // 포그라운드 알림 수신
     onFcmMessage((payload) => {
-      alert('새 알림: ' + (payload?.notification?.title || ''));
+      const notif = (payload as { notification?: { title?: string } });
+      alert('새 알림: ' + (notif.notification?.title || ''));
       console.log('FCM 메시지 수신:', payload);
     });
   }, []);

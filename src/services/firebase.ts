@@ -6,7 +6,6 @@ export async function requestFcmPermissionAndGetToken(): Promise<string | null> 
     if (permission !== 'granted') return null;
     // 아래 VAPID 키는 Firebase 콘솔 > 클라우드 메시징 > 웹 푸시 인증서에서 복사해 입력
     const VAPID_KEY = 'YOUR_PUBLIC_VAPID_KEY';
-    // @ts-ignore
     const { getToken } = await import('firebase/messaging');
     const token = await getToken(messaging, {
       vapidKey: VAPID_KEY,
@@ -20,11 +19,13 @@ export async function requestFcmPermissionAndGetToken(): Promise<string | null> 
 }
 
 // FCM: 포그라운드 알림 수신 리스너 등록
-export function onFcmMessage(callback: (payload: any) => void) {
+export function onFcmMessage(callback: (payload: unknown) => void) {
   if (!messaging) return;
-  // @ts-ignore
+  // Firebase dynamic import type mismatch workaround
   import('firebase/messaging').then(({ onMessage }) => {
-    onMessage(messaging, callback);
+    if (messaging) {
+      onMessage(messaging, callback);
+    }
   });
 }
 // Firebase 설정 파일
@@ -51,7 +52,7 @@ export const db = getFirestore(app);
 export const auth = getAuth(app);
 
 // FCM은 브라우저에서 지원되는 경우에만 초기화
-let messaging: any = null;
+let messaging: import('firebase/messaging').Messaging | undefined;
 if (typeof window !== 'undefined') {
   isSupported().then((supported) => {
     if (supported) {

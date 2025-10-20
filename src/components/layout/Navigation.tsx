@@ -51,8 +51,12 @@ const Navigation: React.FC<NavigationProps> = ({ onNavigate }) => {
   };
 
   return (
-    <nav className="navigation" role="navigation" aria-label="주요 메뉴">
-      <div className="nav-container" role="menubar">
+    <nav
+      className="bg-white shadow-sm md:rounded-none md:shadow-none md:min-h-screen md:w-full w-full fixed md:static bottom-0 left-0 right-0 z-40 flex md:flex-col flex-row md:py-6 md:px-4 py-3 px-2 border-t md:border-t-0 border-gray-200"
+      role="navigation"
+      aria-label="주요 메뉴"
+    >
+      <div className="flex md:flex-col flex-row gap-1 md:gap-4 w-full justify-between md:justify-start" role="menubar">
         {navItems.map((item) => {
           const IconComponent = item.icon;
           return (
@@ -60,7 +64,8 @@ const Navigation: React.FC<NavigationProps> = ({ onNavigate }) => {
               key={item.path}
               to={item.path}
               className={({ isActive }) =>
-                `nav-item ${isActive ? 'nav-item--active' : ''}`
+                `flex flex-1 md:flex-none flex-col md:flex-row items-center gap-1 md:gap-3 px-1 md:px-4 py-2 md:py-3 rounded-xl text-xs md:text-lg font-semibold transition-colors duration-150 min-h-[52px] md:min-h-[56px] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 select-none
+                ${isActive ? 'bg-blue-100 text-blue-700 font-bold shadow-md' : 'text-gray-800 hover:bg-blue-50 hover:text-blue-600'}`
               }
               onClick={() => {
                 speakText(`${item.label} 페이지로 이동`);
@@ -72,11 +77,10 @@ const Navigation: React.FC<NavigationProps> = ({ onNavigate }) => {
             >
               {({ isActive }) => (
                 <>
-                  <div className="nav-icon" aria-hidden="true">
-                    <IconComponent size={24} />
+                  <div className="text-xl md:text-2xl" aria-hidden="true">
+                    <IconComponent size={window.innerWidth < 768 ? 20 : 24} />
                   </div>
-                  <span className="nav-label">{item.label}</span>
-                  {/* aria-current는 최상위에만 적용 */}
+                  <span className="text-center leading-tight">{item.label}</span>
                   {isActive && <span style={{display:'none'}} aria-current="page"></span>}
                 </>
               )}

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import type { ReactNode } from 'react';
 import Header from './Header.tsx';
 import Navigation from './Navigation.tsx';
-import './Layout.css';
 
 interface LayoutProps {
   children: ReactNode;
@@ -74,9 +73,11 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   }, []);
 
   return (
-    <div className="layout">
-  {/* 접근성 컨트롤은 Header 내부로 이동 */}
+    <div className="min-h-screen flex flex-col bg-gray-50">
+      {/* 접근성 안내 메시지 */}
       <div aria-live="polite" aria-atomic="true" className="sr-only">{ariaLiveMsg}</div>
+      
+      {/* 헤더 - 전체 상단 고정 */}
       <Header
         onMenuToggle={handleMenuToggle}
         isMenuOpen={isMenuOpen}
@@ -88,20 +89,36 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
       {/* 모바일 메뉴 오버레이 */}
       {isMenuOpen && (
-        <div className="menu-overlay" onClick={closeMenu}>
-          <div className="mobile-menu" onClick={(e) => e.stopPropagation()}>
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 z-50 md:hidden"
+          style={{ paddingTop: '120px' }}
+          onClick={closeMenu}
+        >
+          <div 
+            className="bg-white w-72 max-w-[85vw] h-full shadow-xl rounded-r-2xl animate-in slide-in-from-left duration-300 overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
             <Navigation onNavigate={closeMenu} />
           </div>
         </div>
       )}
 
-      <main className="main-content">
-        <div className="container">
-          {children}
-        </div>
-      </main>
-      {/* 하단 네비게이션: 메뉴 오픈 시 모바일에서 숨김 */}
-      <div style={{ display: isMenuOpen ? 'none' : undefined }}>
+      <div className="flex flex-1">
+        {/* 데스크탑 사이드바 네비게이션 */}
+        <aside className="hidden md:block fixed left-0 top-24 h-[calc(100vh-6rem)] w-72 bg-white shadow-lg z-10 overflow-y-auto">
+          <Navigation />
+        </aside>
+
+        {/* 메인 콘텐츠 */}
+        <main className="flex-1 w-full md:ml-72 pt-4 md:pt-6 pb-20 md:pb-6 px-4 md:px-6">
+          <div className="w-full max-w-4xl mx-auto">
+            {children}
+          </div>
+        </main>
+      </div>
+
+      {/* 모바일 하단 네비게이션 */}
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-40">
         <Navigation />
       </div>
     </div>
