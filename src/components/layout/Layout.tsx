@@ -91,27 +91,55 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       {isMenuOpen && (
         <div 
           className="fixed inset-0 bg-black bg-opacity-50 z-50 md:hidden"
-          style={{ paddingTop: '120px' }}
           onClick={closeMenu}
         >
           <div 
-            className="bg-white w-72 max-w-[85vw] h-full shadow-xl rounded-r-2xl animate-in slide-in-from-left duration-300 overflow-y-auto"
+            className="bg-white w-72 max-w-[85vw] shadow-xl animate-in slide-in-from-left duration-300 overflow-y-auto rounded-r-2xl"
+            style={{ 
+              marginTop: '140px',
+              height: 'calc(100vh - 140px)'
+            }}
             onClick={(e) => e.stopPropagation()}
           >
-            <Navigation onNavigate={closeMenu} />
+            <div className="p-4">
+              <h3 className="text-lg font-bold text-gray-800 mb-4 text-center border-b border-gray-200 pb-3">메뉴</h3>
+              <div className="flex flex-col space-y-2">
+                <Navigation onNavigate={closeMenu} />
+              </div>
+            </div>
           </div>
         </div>
       )}
 
-      <div className="flex flex-1">
+      <div className="flex flex-1 relative">
         {/* 데스크탑 사이드바 네비게이션 */}
-        <aside className="hidden md:block fixed left-0 top-24 h-[calc(100vh-6rem)] w-72 bg-white shadow-lg z-10 overflow-y-auto">
-          <Navigation />
+        <aside className="hidden md:block w-72 bg-white shadow-lg border-r border-gray-200 flex-shrink-0">
+          <div className="sticky top-0 h-screen overflow-y-auto pt-6">
+            <nav className="flex flex-col gap-3 px-6">
+              {[
+                { path: '/', icon: '🏠', label: '홈', description: '메인 화면' },
+                { path: '/welfare', icon: '❤️', label: '복지정보', description: '복지 혜택 안내' },
+                { path: '/schedule', icon: '📅', label: '일정표', description: '복지관 일정' },
+                { path: '/menu', icon: '🍽️', label: '식단표', description: '오늘의 식단' },
+                { path: '/profile', icon: '👤', label: '내정보', description: '개인 설정' }
+              ].map((item) => (
+                <a
+                  key={item.path}
+                  href={item.path}
+                  className="flex items-center gap-4 px-5 py-4 rounded-xl text-lg font-semibold transition-colors duration-150 min-h-[60px] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 text-gray-800 hover:bg-blue-50 hover:text-blue-600"
+                  aria-label={`${item.label} - ${item.description}`}
+                >
+                  <span className="text-2xl">{item.icon}</span>
+                  <span className="whitespace-nowrap">{item.label}</span>
+                </a>
+              ))}
+            </nav>
+          </div>
         </aside>
 
         {/* 메인 콘텐츠 */}
-        <main className="flex-1 w-full md:ml-72 pt-4 md:pt-6 pb-20 md:pb-6 px-4 md:px-6">
-          <div className="w-full max-w-4xl mx-auto">
+        <main className="flex-1 min-w-0 pt-4 md:pt-8 pb-20 md:pb-8 px-4 md:px-8">
+          <div className="w-full max-w-5xl mx-auto">
             {children}
           </div>
         </main>

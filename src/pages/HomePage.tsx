@@ -125,7 +125,7 @@ const HomePage: React.FC = () => {
   ];
 
   return (
-    <div className="space-y-6 md:space-y-8 w-full px-2 md:px-6">
+    <div className="space-y-6 md:space-y-10 w-full px-2 md:px-0">
       {/* 인사말/시간/위치 프리미엄 카드 */}
       <section>
         <Card variant="primary" className="p-4 md:p-8 flex flex-col gap-3 md:gap-4 items-center text-center animate-fade-in">

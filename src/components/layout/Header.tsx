@@ -34,7 +34,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuToggle, isMenuOpen = false, fontS
   return (
     <header className="sticky top-0 z-50 bg-blue-600 text-white shadow-md border-b border-blue-700">
       <div className="w-full px-2 md:px-4 py-2">
-        <div className="flex flex-col md:flex-row items-start md:items-center gap-2 md:gap-4 relative justify-between min-h-[64px]">
+        <div className="flex flex-col md:flex-row items-start md:items-center gap-2 md:gap-4 relative justify-between min-h-[64px] md:min-h-[80px]">
           
           {/* 모바일 상단: 접근성 컨트롤 + 햄버거 메뉴 */}
           <div className="flex w-full md:w-auto justify-between items-center">
@@ -44,21 +44,22 @@ const Header: React.FC<HeaderProps> = ({ onMenuToggle, isMenuOpen = false, fontS
               <ContrastToggle highContrast={highContrast} setHighContrast={setHighContrast} />
             </div>
 
-            {/* 햄버거 메뉴 버튼 (모바일용) */}
+            {/* 햄버거 메뉴 버튼 (모바일 전용) */}
             <button
-              className="md:hidden flex items-center justify-center bg-blue-700 hover:bg-blue-800 text-white rounded-lg p-2 transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-white"
+              className="block md:!hidden flex items-center justify-center bg-blue-700 hover:bg-blue-800 text-white rounded-lg p-2 transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-white"
               onClick={onMenuToggle}
               aria-label={isMenuOpen ? '메뉴 닫기' : '메뉴 열기'}
               title={isMenuOpen ? '메뉴 닫기' : '메뉴 열기'}
               aria-pressed={isMenuOpen}
               tabIndex={0}
+              style={{ display: window.innerWidth >= 768 ? 'none' : 'flex' }}
             >
               {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
           </div>
 
-          {/* 로고/타이틀 - 중앙 정렬 */}
-          <div className="flex-1 min-w-0 flex flex-col items-center justify-center w-full md:w-auto">
+          {/* 로고/타이틀 - 데스크탑에서는 좌측 정렬, 모바일에서는 중앙 정렬 */}
+          <div className="flex-1 min-w-0 flex flex-col items-center md:items-start justify-center w-full md:w-auto md:ml-8">
             <h1 
               className="flex items-center gap-2 text-xl md:text-3xl font-extrabold cursor-pointer select-none drop-shadow-sm hover:scale-105 transition-transform"
               onClick={() => speakText('시니어 복지 알림 앱')}
@@ -66,7 +67,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuToggle, isMenuOpen = false, fontS
               <span className="text-2xl md:text-4xl drop-shadow-md">🏠</span>
               복지알림
             </h1>
-            <p className="text-sm md:text-lg opacity-90 font-medium mt-1 text-center">안전하고 편리한 복지 정보</p>
+            <p className="text-sm md:text-lg opacity-90 font-medium mt-1 text-center md:text-left">안전하고 편리한 복지 정보</p>
           </div>
 
           {/* 우측 액션(음성안내/설정) - 모바일에서는 작게 */}

@@ -52,21 +52,34 @@ const Navigation: React.FC<NavigationProps> = ({ onNavigate }) => {
 
   return (
     <nav
-      className="bg-white shadow-sm md:rounded-none md:shadow-none md:min-h-screen md:w-full w-full fixed md:static bottom-0 left-0 right-0 z-40 flex md:flex-col flex-row md:py-6 md:px-4 py-3 px-2 border-t md:border-t-0 border-gray-200"
+      className={`bg-white shadow-sm md:rounded-none md:shadow-none md:min-h-screen md:w-full w-full ${
+        onNavigate 
+          ? 'static flex-col py-0 px-0' 
+          : 'fixed bottom-0 left-0 right-0 z-40 flex md:flex-col flex-row md:py-8 md:px-6 py-3 px-2 border-t md:border-t-0'
+      } border-gray-200`}
       role="navigation"
       aria-label="주요 메뉴"
     >
-      <div className="flex md:flex-col flex-row gap-1 md:gap-4 w-full justify-between md:justify-start" role="menubar">
+      <div className={`flex ${onNavigate ? 'flex-col' : 'md:flex-col flex-row'} gap-1 md:gap-3 w-full ${onNavigate ? 'space-y-2' : 'justify-between md:justify-start'}`} role="menubar">
         {navItems.map((item) => {
           const IconComponent = item.icon;
           return (
             <NavLink
               key={item.path}
               to={item.path}
-              className={({ isActive }) =>
-                `flex flex-1 md:flex-none flex-col md:flex-row items-center gap-1 md:gap-3 px-1 md:px-4 py-2 md:py-3 rounded-xl text-xs md:text-lg font-semibold transition-colors duration-150 min-h-[52px] md:min-h-[56px] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 select-none
-                ${isActive ? 'bg-blue-100 text-blue-700 font-bold shadow-md' : 'text-gray-800 hover:bg-blue-50 hover:text-blue-600'}`
-              }
+              className={({ isActive }) => {
+                if (onNavigate) {
+                  // 모바일 오버레이에서의 스타일
+                  return `flex flex-row w-full items-center gap-3 px-4 py-3 rounded-xl text-base font-semibold transition-colors duration-150 min-h-[48px] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 select-none ${
+                    isActive ? 'bg-blue-100 text-blue-700 font-bold shadow-md' : 'text-gray-800 hover:bg-blue-50 hover:text-blue-600'
+                  }`;
+                } else {
+                  // 일반 네비게이션 스타일
+                  return `flex flex-1 md:flex-none flex-col md:flex-row items-center gap-1 md:gap-4 px-1 md:px-5 py-2 md:py-4 rounded-xl text-xs md:text-lg font-semibold transition-colors duration-150 min-h-[52px] md:min-h-[60px] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 select-none ${
+                    isActive ? 'bg-blue-100 text-blue-700 font-bold shadow-md' : 'text-gray-800 hover:bg-blue-50 hover:text-blue-600'
+                  }`;
+                }
+              }}
               onClick={() => {
                 speakText(`${item.label} 페이지로 이동`);
                 onNavigate?.();
@@ -77,10 +90,10 @@ const Navigation: React.FC<NavigationProps> = ({ onNavigate }) => {
             >
               {({ isActive }) => (
                 <>
-                  <div className="text-xl md:text-2xl" aria-hidden="true">
-                    <IconComponent size={window.innerWidth < 768 ? 20 : 24} />
+                  <div className={`${onNavigate ? 'text-xl' : 'text-xl md:text-2xl'}`} aria-hidden="true">
+                    <IconComponent size={onNavigate ? 20 : (window.innerWidth < 768 ? 20 : 24)} />
                   </div>
-                  <span className="text-center leading-tight">{item.label}</span>
+                  <span className={`${onNavigate ? 'text-left' : 'text-center'} leading-tight`}>{item.label}</span>
                   {isActive && <span style={{display:'none'}} aria-current="page"></span>}
                 </>
               )}
